@@ -1,0 +1,95 @@
+{
+    "resource": {
+        "databricks_cluster": {
+            "databricks_cluster_1113_040110_scam179": {
+                "autotermination_minutes": 10,
+                "cluster_name": "it_cluster_no_pool_std_cluster",
+                "depends_on": [
+                    "databricks_dbfs_file.databricks_dbfs_files"
+                ],
+                "driver_node_type_id": "${var.Standard_DS3_v2}",
+                "dynamic": [
+                    {
+                        "init_scripts": {
+                            "content": {
+                                "dbfs": {
+                                    "destination": "dbfs:/tests/empty.sh"
+                                }
+                            },
+                            "for_each": "${[1]}"
+                        }
+                    },
+                    {
+                        "library": {
+                            "content": {
+                                "jar": "${var.dbfs_tests_library_jar}"
+                            },
+                            "for_each": "${[1]}"
+                        }
+                    },
+                    {
+                        "library": {
+                            "content": {
+                                "egg": "dbfs:/tests/sample.egg"
+                            },
+                            "for_each": "${[1]}"
+                        }
+                    },
+                    {
+                        "library": {
+                            "content": {
+                                "whl": "dbfs:/tests/networkx-2.5-py3-none-any.whl"
+                            },
+                            "for_each": "${[1]}"
+                        }
+                    },
+                    {
+                        "library": {
+                            "content": {
+                                "maven": {
+                                    "coordinates": "com.crealytics:spark-excel_2.12:0.13.1",
+                                    "exclusions": [
+                                        "slf4j:slf4j:RELEASE"
+                                    ]
+                                }
+                            },
+                            "for_each": "${[1]}"
+                        }
+                    },
+                    {
+                        "library": {
+                            "content": {
+                                "pypi": {
+                                    "package": "mlflow"
+                                }
+                            },
+                            "for_each": "${[1]}"
+                        }
+                    },
+                    {
+                        "library": {
+                            "content": {
+                                "cran": {
+                                    "package": "sampling",
+                                    "repo": "https://cran.us.r-project.org"
+                                }
+                            },
+                            "for_each": "${[1]}"
+                        }
+                    }
+                ],
+                "enable_elastic_disk": "${var.CLOUD == \"AZURE\" ? true : true}",
+                "enable_local_disk_encryption": false,
+                "node_type_id": "${var.Standard_DS3_v2}",
+                "num_workers": 8,
+                "spark_conf": {
+                    "spark.databricks.delta.preview.enabled": "true"
+                },
+                "spark_env_vars": {
+                    "PYSPARK_PYTHON": "/databricks/python3/bin/python3"
+                },
+                "spark_version": "6.5.x-scala2.11"
+            }
+        }
+    }
+}

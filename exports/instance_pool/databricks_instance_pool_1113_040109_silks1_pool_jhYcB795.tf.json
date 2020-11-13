@@ -1,0 +1,20 @@
+{
+    "resource": {
+        "databricks_instance_pool": {
+            "databricks_instance_pool_1113_040109_silks1_pool_jhYcB795": {
+                "custom_tags": {
+                    "custom": "1"
+                },
+                "enable_elastic_disk": true,
+                "idle_instance_autotermination_minutes": 120,
+                "instance_pool_name": "small instance pool 2",
+                "max_capacity": 5,
+                "min_idle_instances": 0,
+                "node_type_id": "${var.Standard_DS3_v2}",
+                "preloaded_spark_versions": [
+                    "7.1.x-scala2.12"
+                ]
+            }
+        }
+    }
+}

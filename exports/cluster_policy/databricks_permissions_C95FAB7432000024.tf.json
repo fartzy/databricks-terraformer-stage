@@ -1,0 +1,26 @@
+{
+    "resource": {
+        "databricks_permissions": {
+            "databricks_permissions_C95FAB7432000024": {
+                "cluster_policy_id": "${databricks_cluster_policy.databricks_cluster_policy_C95FAB7432000024.id}",
+                "count": "${var.ME_USERNAME != \"michael.artz@databricks.com\" ? 1 : 0}",
+                "depends_on": [
+                    "databricks_user.databricks_scim_users",
+                    "databricks_group.databricks_scim_groups"
+                ],
+                "dynamic": [
+                    {
+                        "access_control": {
+                            "content": {
+                                "group_name": null,
+                                "permission_level": "CAN_USE",
+                                "user_name": "michael.artz@databricks.com"
+                            },
+                            "for_each": "${var.ME_USERNAME != \"michael.artz@databricks.com\" ? [1] : []}"
+                        }
+                    }
+                ]
+            }
+        }
+    }
+}

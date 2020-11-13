@@ -1,0 +1,13 @@
+{
+    "resource": {
+        "databricks_job": {
+            "databricks_job_3": {
+                "email_notifications": {},
+                "existing_cluster_id": "${databricks_cluster.databricks_cluster_1113_040110_scam179.id}",
+                "max_concurrent_runs": 1,
+                "name": "IntegrationTestJob_with_existing_cluster",
+                "timeout_seconds": 0
+            }
+        }
+    }
+}

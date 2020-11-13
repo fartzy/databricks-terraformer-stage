@@ -1,0 +1,10 @@
+{
+    "resource": {
+        "databricks_cluster_policy": {
+            "databricks_cluster_policy_C95FAB7432000021": {
+                "definition": "{}",
+                "name": "it_empty_policy"
+            }
+        }
+    }
+}

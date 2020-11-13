@@ -1,0 +1,100 @@
+{
+    "resource": {
+        "databricks_cluster": {
+            "databricks_cluster_1113_040116_slaw186": {
+                "autoscale": {
+                    "max_workers": 8,
+                    "min_workers": 2
+                },
+                "autotermination_minutes": 10,
+                "cluster_name": "it_cluster_with_policy",
+                "depends_on": [
+                    "databricks_dbfs_file.databricks_dbfs_files"
+                ],
+                "driver_node_type_id": "${var.Standard_DS3_v2}",
+                "dynamic": [
+                    {
+                        "init_scripts": {
+                            "content": {
+                                "dbfs": {
+                                    "destination": "dbfs:/tests/empty.sh"
+                                }
+                            },
+                            "for_each": "${[1]}"
+                        }
+                    },
+                    {
+                        "library": {
+                            "content": {
+                                "jar": "${var.dbfs_tests_library_jar}"
+                            },
+                            "for_each": "${[1]}"
+                        }
+                    },
+                    {
+                        "library": {
+                            "content": {
+                                "egg": "dbfs:/tests/sample.egg"
+                            },
+                            "for_each": "${[1]}"
+                        }
+                    },
+                    {
+                        "library": {
+                            "content": {
+                                "whl": "dbfs:/tests/networkx-2.5-py3-none-any.whl"
+                            },
+                            "for_each": "${[1]}"
+                        }
+                    },
+                    {
+                        "library": {
+                            "content": {
+                                "maven": {
+                                    "coordinates": "com.crealytics:spark-excel_2.12:0.13.1",
+                                    "exclusions": [
+                                        "slf4j:slf4j:RELEASE"
+                                    ]
+                                }
+                            },
+                            "for_each": "${[1]}"
+                        }
+                    },
+                    {
+                        "library": {
+                            "content": {
+                                "pypi": {
+                                    "package": "mlflow"
+                                }
+                            },
+                            "for_each": "${[1]}"
+                        }
+                    },
+                    {
+                        "library": {
+                            "content": {
+                                "cran": {
+                                    "package": "sampling",
+                                    "repo": "https://cran.us.r-project.org"
+                                }
+                            },
+                            "for_each": "${[1]}"
+                        }
+                    }
+                ],
+                "enable_elastic_disk": "${var.CLOUD == \"AZURE\" ? true : false}",
+                "enable_local_disk_encryption": false,
+                "instance_pool_id": "${databricks_instance_pool.databricks_instance_pool_1113_040109_firs2_pool_9Z00IhdU.id}",
+                "node_type_id": "${var.Standard_DS3_v2}",
+                "policy_id": "${databricks_cluster_policy.databricks_cluster_policy_C95FAB7432000021.id}",
+                "spark_conf": {
+                    "spark.databricks.delta.preview.enabled": "true"
+                },
+                "spark_env_vars": {
+                    "PYSPARK_PYTHON": "/databricks/python3/bin/python3"
+                },
+                "spark_version": "6.5.x-scala2.11"
+            }
+        }
+    }
+}
